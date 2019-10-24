@@ -1,0 +1,10 @@
+#loginPane{
+		-fx-background-image:url(/resources/back.png);
+		-fx-background-size: cover;
+		-fx-background-color: #fff;
+}
+
+#loginLabel{
+	-fx-effect: dropshadow(gaussian, #ffffff, 10, 0.1, 0, 0);
+	/*블루어 효과, 색상, 흩어지는 정도, x, y */
+}

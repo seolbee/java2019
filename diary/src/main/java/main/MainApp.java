@@ -1,0 +1,61 @@
+package main;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
+public class MainApp extends Application{
+	
+	public static MainApp app;
+	
+	private StackPane mainPage;
+	
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		app = this;
+		try {
+			FXMLLoader mainLoader = new FXMLLoader();
+			mainLoader.setLocation(getClass().getResource("/views/MainLayout.fxml"));
+			mainPage = mainLoader.load();
+			
+			FXMLLoader LoginLoader = new FXMLLoader();
+			LoginLoader.setLocation(getClass().getResource("/views/LoginLayout.fxml"));
+			AnchorPane LoginPage = LoginLoader.load();
+			
+			Scene scene = new Scene(mainPage);
+			scene.getStylesheets().add(getClass().getResource("app.css").toExternalForm());
+			mainPage.getChildren().add(LoginPage);
+			
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("로딩 오류");
+		}
+	}
+	
+	public static void main(String[] args) {
+		launch(args);
+	}
+	
+	public void slideOut(Pane pane) {
+		Timeline timeline = new Timeline();
+		KeyValue toRight = new KeyValue(pane.translateXProperty(), 800);
+		KeyValue fadeOut = new KeyValue(pane.opacityProperty(), 800);
+		
+		KeyFrame keyFrame = new KeyFrame(Duration.millis(500), (e)->{
+			mainPage.getChildren().remove(pane);
+		}, toRight, fadeOut);
+		
+		timeline.getKeyFrames().add(keyFrame);
+		timeline.play();
+	}
+}
