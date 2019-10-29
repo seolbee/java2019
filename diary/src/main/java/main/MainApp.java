@@ -1,5 +1,8 @@
 package main;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -11,12 +14,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import views.LoginController;
+import views.MasterController;
 
 public class MainApp extends Application{
 	
 	public static MainApp app;
 	
 	private StackPane mainPage;
+	
+	private Map<String, MasterController> controllerMap = new HashMap<>();
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -29,6 +36,9 @@ public class MainApp extends Application{
 			FXMLLoader LoginLoader = new FXMLLoader();
 			LoginLoader.setLocation(getClass().getResource("/views/LoginLayout.fxml"));
 			AnchorPane LoginPage = LoginLoader.load();
+			
+			LoginController lc = LoginLoader.getController();
+			controllerMap.put("login", lc);
 			
 			Scene scene = new Scene(mainPage);
 			scene.getStylesheets().add(getClass().getResource("app.css").toExternalForm());
