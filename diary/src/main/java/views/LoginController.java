@@ -71,4 +71,8 @@ public class LoginController extends MasterController{
 			JDBCUtil.close(con);
 		}
 	}
+	
+	public void openRegisterPane() {
+		MainApp.app.loadPane("register");
+	}	
 }

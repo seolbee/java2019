@@ -22,7 +22,7 @@
             <PasswordField fx:id="passField" prefHeight="40.0" prefWidth="250.0" promptText="비밀번호를 입력하세요" />
             <HBox alignment="CENTER" prefHeight="55.0" prefWidth="250.0" spacing="20.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="100.0" text="회원가입" />
+                  <Button mnemonicParsing="false" onAction="#openRegisterPane" prefHeight="45.0" prefWidth="100.0" text="회원가입" />
                   <Button mnemonicParsing="false" onAction="#loginProcess" prefHeight="45.0" prefWidth="100.0" text="로그인" />
                </children>
             </HBox>

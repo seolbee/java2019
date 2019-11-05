@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import views.LoginController;
 import views.MasterController;
+import views.RegisterController;
 
 public class MainApp extends Application{
 	
@@ -38,7 +39,16 @@ public class MainApp extends Application{
 			AnchorPane LoginPage = LoginLoader.load();
 			
 			LoginController lc = LoginLoader.getController();
+			lc.setRoot(LoginPage);
 			controllerMap.put("login", lc);
+			
+			FXMLLoader registerLoader = new FXMLLoader();
+			registerLoader.setLocation(getClass().getResource("/views/RegisterLayout.fxml"));
+			AnchorPane registerPage = registerLoader.load();
+			
+			RegisterController rc = registerLoader.getController();
+			rc.setRoot(registerPage);
+			controllerMap.put("register", rc);
 			
 			Scene scene = new Scene(mainPage);
 			scene.getStylesheets().add(getClass().getResource("app.css").toExternalForm());
@@ -54,6 +64,12 @@ public class MainApp extends Application{
 	
 	public static void main(String[] args) {
 		launch(args);
+	}
+	
+	public void loadPane(String name) {
+		MasterController c = controllerMap.get(name);
+		Pane pane = c.getRoot();
+		mainPage.getChildren().add(pane);
 	}
 	
 	public void slideOut(Pane pane) {
