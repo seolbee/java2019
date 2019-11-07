@@ -1,5 +1,9 @@
 package views;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
@@ -8,9 +12,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import Util.JDBCUtil;
+import Util.Util;
 import domain.UserVO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -67,12 +74,45 @@ public class MainController extends MasterController{
 			cDay = cDay.minusDays(1);
 		}
 		
-		for(DayController day : list) {
-			day.setDayLabel(cDay);
-			day.setCountLabel(0);
-			cDay = cDay.plusDays(1);
-		}
+		LocalDate first = LocalDate.of(ym.getYear(), ym.getMonthValue(), 1);
+		LocalDate last= LocalDate.of(ym.getYear(), ym.getMonthValue() + 1, 1).minusDays(1);
 		
+		Connection con = JDBCUtil.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT date, COUNT(*) AS cnt FROM diary_todo WHERE owner = ? AND date BETWEEN ? AND ? GROUP BY date";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, user.getId());
+			pstmt.setDate(2, Date.valueOf(first));
+			pstmt.setDate(3, Date.valueOf(last));
+			
+			rs = pstmt.executeQuery();
+			Map<LocalDate, Integer> cntMap = new HashMap<>();
+			while(rs.next()) {
+				LocalDate key = rs.getDate("date").toLocalDate();
+				Integer value = rs.getInt("cnt");
+				cntMap.put(key, value);
+			}
+			
+			for(DayController day : list) {
+				day.setDayLabel(cDay);
+				if(cntMap.containsKey(cDay)) {
+					day.setCountLabel(cntMap.get(cDay));
+				} else {
+					day.setCountLabel(0);
+				}
+				cDay = cDay.plusDays(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Util.showAlert("에러", "데이터 베이스 쿼리 도중 오류", AlertType.ERROR);
+		} finally {
+			JDBCUtil.close(rs);
+			JDBCUtil.close(pstmt);
+			JDBCUtil.close(con);
+		}
+		System.out.println(ym);
 		currentYM = ym;
 	}
 	
@@ -112,5 +152,9 @@ public class MainController extends MasterController{
 		for(DayController dc : list) {
 			dc.outFocus();
 		}
+	}
+	
+	public UserVO getUser() {
+		return user;
 	}
 }

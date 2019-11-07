@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+import domain.UserVO;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -118,5 +119,10 @@ public class MainApp extends Application{
 	public void loadTodoData(LocalDate date) {
 		TodoController tc = (TodoController) controllerMap.get("todo");
 		tc.init(date);
+	}
+	
+	public UserVO getLoginUser() {
+		MainController mc = (MainController)controllerMap.get("main");
+		return mc.getUser();
 	}
 }

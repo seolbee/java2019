@@ -27,8 +27,17 @@
                </styleClass></Button>
             <HBox prefHeight="253.0" prefWidth="580.0" spacing="20.0">
                <children>
-                  <ListView fx:id="todoList" prefHeight="236.0" prefWidth="199.0" />
-                  <TextArea fx:id="todoContent" prefHeight="278.0" prefWidth="373.0" />
+                  <ListView fx:id="todoList" onMouseClicked="#loadTodo" prefHeight="236.0" prefWidth="199.0" />
+                  <VBox prefHeight="254.0" prefWidth="358.0">
+                     <children>
+                        <TextField fx:id="todoTitle" prefHeight="40.0">
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextArea fx:id="todoContent" prefHeight="202.0" prefWidth="358.0" />
+                     </children>
+                  </VBox>
                </children>
                <VBox.margin>
                   <Insets top="20.0" />

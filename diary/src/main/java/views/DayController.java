@@ -25,6 +25,11 @@ public class DayController extends MasterController{
 	
 	public void setCountLabel(Integer count) {
 		lblCount.setText(count.toString());
+		if(count == 0) {
+			lblCount.setVisible(false);
+		} else {
+			lblCount.setVisible(true);
+		}
 	}
 	
 	@Override
