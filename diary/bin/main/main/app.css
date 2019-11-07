@@ -29,3 +29,7 @@
 	-fx-background-color: #dc3545;
 	-fx-border-color: #dc3545;
 }
+
+.active{
+	-fx-background-color: rgba(0,123,255,0.5);
+}

@@ -2,7 +2,7 @@ package views;
 
 import javafx.scene.layout.Pane;
 
-public class MasterController {
+public abstract class MasterController {
 	private Pane root;
 
 	public Pane getRoot() {
@@ -12,4 +12,6 @@ public class MasterController {
 	public void setRoot(Pane root) {
 		this.root = root;
 	}
+	
+	public abstract void reset();
 }

@@ -23,6 +23,12 @@ public class LoginController extends MasterController{
 	@FXML
 	private AnchorPane loginPane;
 	
+	@Override
+	public void reset() {
+		txtId.setText("");
+		passField.setText("");
+	}
+	
 	public void loginProcess() {
 		String id = txtId.getText();
 		
@@ -35,6 +41,8 @@ public class LoginController extends MasterController{
 		UserVO user = checkLogin(id, pass);
 		
 		if(user!=null) {
+			MainController mc = (MainController)MainApp.app.getController("main");
+			mc.setLoginInfo(user);
 			MainApp.app.slideOut(loginPane);
 		} else {
 			Util.showAlert("에러", "존재하지 않는 아이디이거나 비밀번호가 틀립니다.", AlertType.ERROR);
