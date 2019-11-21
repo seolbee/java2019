@@ -3,18 +3,23 @@ package views;
 import application.Main;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import main.Game;
 
 public class MainController {
-	
+	@FXML
+	private Pane pane;
 	@FXML
 	private Canvas gameCanvas;
+	
+	private Label label;
 	
 	@FXML
 	private void initialize() {
 		System.out.println("게임판 생성");
-		Main.app.game = new Game(gameCanvas, 10);
+		Main.app.game = new Game(gameCanvas, 5, label);
 		Main.app.game.gameStart();
 	}
 	

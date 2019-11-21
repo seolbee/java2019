@@ -1,6 +1,5 @@
 package main;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Block {
@@ -13,22 +12,21 @@ public class Block {
 	
 	private boolean setBoolean;
 	
-	public Block(boolean bo) {
+	public Block(boolean bo, Color color) {
 		this.setBoolean = bo;
+		this.color = color;
 	}
 
 	public boolean isSetBoolean() {
 		return setBoolean;
 	}
-	
-	public void render(GraphicsContext gc, int width, int i, int j) {
-		gc.setFill(this.color);
-		int x = 5 + (width / 12 + 5) * j;
-		int y = 5 + (width / 12 + 5) * i;
-		gc.fillRect(x, y, width/12, width/12);
+
+	public Color getColor() {
+		return color;
 	}
 
-	public void setColor(Color white) {
+	public void setColor(Color color) {
 		this.color = color;
 	}
+	
 }
