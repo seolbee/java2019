@@ -1,9 +1,14 @@
 package main;
 
+import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -22,17 +27,21 @@ public class Game {
 	
 	private int gap = 1;
 	
-	private Label label;
-	
-	private String xy = "0:1,2:4,4:0,1:2";
+	private String xy = "0:1,2:4,4:0,1:2,0:2,4:1,3:1,3:3";
 	private String[] pointList;
 	
 	private boolean gameOver = false;
 	
-	public Game(Canvas canvas, int xlength, Label label) {
+	private VBox vbox;
+	
+	private HBox hbox;
+	
+	public Game(Canvas canvas, int xlength, VBox pane, HBox apane) {
 		this.canvas = canvas;
 		this.width = this.canvas.getWidth() / (xlength + gap);
 		this.length = xlength;
+		this.vbox = pane;
+		this.hbox = apane;
 		System.out.println(this.canvas.getWidth());
 		System.out.println(this.width);
 		gc = this.canvas.getGraphicsContext2D();
@@ -45,7 +54,6 @@ public class Game {
 			String[] point = pointList[i].split(":"); 
 			int x =(int) Double.parseDouble(point[0]);
 			int y =(int) Double.parseDouble(point[1]);
-			System.out.println(x + ", " + y);
 			if(pointY == y && pointX ==x) {
 				return true;
 			} else {
@@ -93,18 +101,24 @@ public class Game {
 	}
 	
 	public void setLabel() {
-		for(int z  = 0; z < this.length; z++) {
-			for(int i = 0; i<this.length; i++) {
-				int count = 0;
-				for(int j = 0; j<this.length; j++) {
-					if(board[i][j].isSetBoolean()) {
-						count++;
-					} else {
-						System.out.println(count);
-						count = 0;
-					}
+		for(int i = 0; i<this.length; i++) {
+			int count = 0;
+			HBox hbox = new HBox();
+			hbox.setMinHeight(width);
+			hbox.setAlignment(Pos.CENTER_RIGHT);
+			for(int j = 0; j<this.length; j++) {
+				if(board[i][j].isSetBoolean()) {
+					count++;
+				} else {
+					if(count == 0) continue;
+					Label label = new Label();
+					label.setText(count+"");
+					label.setFont(new Font("Arial", 20));
+					hbox.getChildren().add(label);
+					count = 0;
 				}
 			}
+			vbox.getChildren().add(hbox);
 		}
 	}
 	
@@ -114,7 +128,6 @@ public class Game {
 				double x = 1 + (width + 1) * j;
 				double y = 1 + (width + 1) * i;
 				gc.fillRect(x, y, width, width);
-				System.out.println(MkBoard(i, j));
 				board[i][j] = new Block(MkBoard(i, j), Color.BLACK);
 			}
 		}
