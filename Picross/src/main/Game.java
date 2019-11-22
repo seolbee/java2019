@@ -5,6 +5,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 
 public class Game {
 	
@@ -63,20 +65,45 @@ public class Game {
 		if(mouseX % bs < gap || mouseY % bs < gap) return;
 		int x = (int) mouseX / bs;
 		int y = (int) mouseY / bs;
-		System.out.println(board[y][x].isSetBoolean());
 		if(x >=this.length || y >=this.length) return;
-		if(!board[y][x].isSetBoolean()) gameOver = true;
-		board[y][x].setColor(Color.WHITE);
+		if(!board[y][x].isSetBoolean()) {
+			this.gameOver = true;
+			board[y][x].setColor(Color.RED);
+		}else {
+			board[y][x].setColor(Color.WHITE);
+		}
 		this.render(gc);
 	}
 	
 	public void render(GraphicsContext gc) {
-		for(int i = 0; i < this.length; i++) {
-			for(int j = 0; j < this.length; j++) {
-				double x = 1 + (width + 1) * j;
-				double y = 1 + (width + 1) * i;
-				gc.setFill(board[i][j].getColor());
-				gc.fillRect(x, y, width, width);
+			for(int i = 0; i < this.length; i++) {
+				for(int j = 0; j < this.length; j++) {
+					double x = 1 + (width + 1) * j;
+					double y = 1 + (width + 1) * i;
+					gc.setFill(board[i][j].getColor());
+					gc.fillRect(x, y, width, width);
+				}
+			}
+			if(gameOver) {
+				gc.setStroke(Color.WHITE);
+				gc.setTextAlign(TextAlignment.CENTER);
+				gc.setFont(new Font("Arial", 30));
+				gc.strokeText("game Over", this.canvas.getWidth() / 2, this.canvas.getHeight()/2);
+			}
+	}
+	
+	public void setLabel() {
+		for(int z  = 0; z < this.length; z++) {
+			for(int i = 0; i<this.length; i++) {
+				int count = 0;
+				for(int j = 0; j<this.length; j++) {
+					if(board[i][j].isSetBoolean()) {
+						count++;
+					} else {
+						System.out.println(count);
+						count = 0;
+					}
+				}
 			}
 		}
 	}
@@ -91,5 +118,6 @@ public class Game {
 				board[i][j] = new Block(MkBoard(i, j), Color.BLACK);
 			}
 		}
+		setLabel();
 	}
 }
