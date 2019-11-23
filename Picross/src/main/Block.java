@@ -12,6 +12,8 @@ public class Block {
 	
 	private boolean setBoolean;
 	
+	private boolean check = false;
+	
 	public Block(boolean bo, Color color) {
 		this.setBoolean = bo;
 		this.color = color;
@@ -27,6 +29,14 @@ public class Block {
 
 	public void setColor(Color color) {
 		this.color = color;
+	}
+
+	public boolean isCheck() {
+		return check;
+	}
+
+	public void setCheck(boolean check) {
+		this.check = check;
 	}
 	
 }

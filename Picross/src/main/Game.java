@@ -1,13 +1,13 @@
 package main;
 
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -27,28 +27,31 @@ public class Game {
 	
 	private int gap = 1;
 	
-	private String xy = "0:1,2:4,4:0,1:2,0:2,4:1,3:1,3:3";
+	private String xy = "0:0,0:1,0:2,0:3,0:4";
 	private String[] pointList;
 	
 	private boolean gameOver = false;
+	
+	private boolean gameClear = false;
 	
 	private VBox vbox;
 	
 	private HBox hbox;
 	
-	public Game(Canvas canvas, int xlength, VBox pane, HBox apane) {
+	private AnchorPane pane;
+	
+	public Game(Canvas canvas, int xlength, VBox vbox, HBox hbox, AnchorPane pane) {
 		this.canvas = canvas;
-		this.width = this.canvas.getWidth() / (xlength + gap);
+		this.width = Math.ceil(this.canvas.getWidth() / (xlength + gap));
 		this.length = xlength;
-		this.vbox = pane;
-		this.hbox = apane;
-		System.out.println(this.canvas.getWidth());
-		System.out.println(this.width);
+		this.vbox = vbox;
+		this.hbox = hbox;
+		this.pane = pane;
 		gc = this.canvas.getGraphicsContext2D();
 		board = new Block[length][length];
 		pointList = xy.split(",");
 	}
-	
+
 	public boolean MkBoard(int pointY, int pointX) {
 		for(int i = 0; i< pointList.length; i++) {
 			String[] point = pointList[i].split(":"); 
@@ -64,7 +67,7 @@ public class Game {
 	}
 	
 	public void click(MouseEvent e) {
-		if(gameOver) return;
+		if(gameOver || gameClear) return;
 		double mouseX = e.getX();
 		double mouseY = e.getY();
 		
@@ -78,9 +81,27 @@ public class Game {
 			this.gameOver = true;
 			board[y][x].setColor(Color.RED);
 		}else {
+			board[y][x].setCheck(true);
+			this.checkClear();
 			board[y][x].setColor(Color.WHITE);
 		}
 		this.render(gc);
+	}
+	
+	public void checkClear() {
+		boolean clear = true;
+		for(int i = 0; i< pointList.length; i++) {
+			String[] point = pointList[i].split(":"); 
+			int x =(int) Double.parseDouble(point[0]);
+			int y =(int) Double.parseDouble(point[1]);
+			if(!board[y][x].isCheck()) {
+				clear = false;
+				break;
+			}
+		}
+		if(clear) {
+			this.gameClear = true;
+		}
 	}
 	
 	public void render(GraphicsContext gc) {
@@ -96,7 +117,13 @@ public class Game {
 				gc.setStroke(Color.WHITE);
 				gc.setTextAlign(TextAlignment.CENTER);
 				gc.setFont(new Font("Arial", 30));
-				gc.strokeText("game Over", this.canvas.getWidth() / 2, this.canvas.getHeight()/2);
+				gc.strokeText("game Over", this.canvas.getWidth() / 2 , this.canvas.getHeight()/2);
+			}
+			if(gameClear) {
+				gc.setStroke(Color.WHITE);
+				gc.setTextAlign(TextAlignment.CENTER);
+				gc.setFont(new Font("Arial", 30));
+				gc.strokeText("game Clear", this.canvas.getWidth()/2, this.canvas.getHeight()/2);
 			}
 	}
 	
@@ -105,20 +132,55 @@ public class Game {
 			int count = 0;
 			HBox hbox = new HBox();
 			hbox.setMinHeight(width);
-			hbox.setAlignment(Pos.CENTER_RIGHT);
+			hbox.setAlignment(Pos.TOP_RIGHT);
 			for(int j = 0; j<this.length; j++) {
-				if(board[i][j].isSetBoolean()) {
-					count++;
-				} else {
+				if(!board[i][j].isSetBoolean()) {
 					if(count == 0) continue;
 					Label label = new Label();
 					label.setText(count+"");
 					label.setFont(new Font("Arial", 20));
 					hbox.getChildren().add(label);
 					count = 0;
+				} else {
+					count++;
 				}
 			}
+			if(count != 0) {
+				Label label = new Label();
+				label.setText(count+"");
+				label.setFont(new Font("Arial", 20));
+				hbox.getChildren().add(label);
+				count = 0;
+			}
 			vbox.getChildren().add(hbox);
+		}
+		
+		for(int i = 0; i<this.length; i++) {
+			int count = 0;
+			VBox vbox = new VBox();
+			vbox.setMinWidth(width);
+			vbox.setAlignment(Pos.CENTER);
+			for(int j = 0; j<this.length; j++) {
+				if(!board[j][i].isSetBoolean()) {
+					if(count == 0) continue;
+					Label label = new Label();
+					label.setText(count+"");
+					label.setFont(new Font("Arial", 20));
+					vbox.getChildren().add(label);
+					count = 0;
+				}else {
+					count++;
+				}
+			}
+			if(count != 0) {
+				Label label = new Label();
+				label.setText(count+"");
+				label.setFont(new Font("Arial", 20));
+				vbox.getChildren().add(label);
+				count = 0;
+			}
+			
+			hbox.getChildren().add(vbox);
 		}
 	}
 	

@@ -3,20 +3,19 @@ package views;
 import application.Main;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import main.Game;
 
 public class MainController {
+	
 	@FXML
-	private Pane pane;
+	private AnchorPane pane;
+	
 	@FXML
 	private Canvas gameCanvas;
-	
-	private Label label;
 	
 	@FXML
 	private VBox vbox;
@@ -27,7 +26,7 @@ public class MainController {
 	@FXML
 	private void initialize() {
 		System.out.println("게임판 생성");
-		Main.app.game = new Game(gameCanvas, 5, vbox, hbox);
+		Main.app.game = new Game(gameCanvas, 5, vbox, hbox, pane);
 		Main.app.game.gameStart();
 	}
 	
