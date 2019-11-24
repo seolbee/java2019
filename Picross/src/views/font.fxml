@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="400.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1">
+   <children>
+      <Button layoutX="150.0" layoutY="391.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="100.0" text="게임시작" />
+      <Label alignment="CENTER" layoutX="108.0" layoutY="126.0" prefHeight="92.0" prefWidth="184.0" text="노노그램 게임">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

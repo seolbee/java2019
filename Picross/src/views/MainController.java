@@ -9,7 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import main.Game;
 
-public class MainController {
+public class MainController extends MasterController{
 	
 	@FXML
 	private AnchorPane pane;
@@ -25,6 +25,7 @@ public class MainController {
 	
 	@FXML
 	private void initialize() {
+		this.setRoot(pane);
 		System.out.println("게임판 생성");
 		Main.app.game = new Game(gameCanvas, 5, vbox, hbox, pane);
 		Main.app.game.gameStart();

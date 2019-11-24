@@ -1,10 +1,10 @@
 package main;
 
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -76,14 +76,20 @@ public class Game {
 		if(mouseX % bs < gap || mouseY % bs < gap) return;
 		int x = (int) mouseX / bs;
 		int y = (int) mouseY / bs;
-		if(x >=this.length || y >=this.length) return;
-		if(!board[y][x].isSetBoolean()) {
-			this.gameOver = true;
-			board[y][x].setColor(Color.RED);
-		}else {
-			board[y][x].setCheck(true);
-			this.checkClear();
-			board[y][x].setColor(Color.WHITE);
+		
+		MouseButton btn = e.getButton();
+		if(btn == MouseButton.SECONDARY) {
+			board[y][x].setColor(Color.DIMGRAY);
+		}else if(btn == MouseButton.PRIMARY){	
+			if(x >=this.length || y >=this.length) return;
+			if(!board[y][x].isSetBoolean()) {
+				this.gameOver = true;
+				board[y][x].setColor(Color.RED);
+			}else {
+				board[y][x].setCheck(true);
+				this.checkClear();
+				board[y][x].setColor(Color.WHITE);
+			}
 		}
 		this.render(gc);
 	}
