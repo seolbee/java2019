@@ -57,7 +57,6 @@ public class Main extends Application {
 			
 			Scene scene = new Scene(stPane);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			stPane.getChildren().add(QueuePage);
 			stPane.getChildren().add(fontPage);
 			
 			primaryStage.setScene(scene);
@@ -73,7 +72,6 @@ public class Main extends Application {
 		KeyValue fadeOut = new KeyValue(pane.opacityProperty(), 800);
 		
 		KeyFrame keyFrame = new KeyFrame(Duration.millis(500), (e)->{
-			System.out.println(pane);
 			stPane.getChildren().remove(pane);
 		}, toRight, fadeOut);
 		timeline.getKeyFrames().add(keyFrame);

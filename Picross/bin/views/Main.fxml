@@ -8,14 +8,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.MainController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.MainController">
    <children>
       <AnchorPane fx:id="APane" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <Canvas fx:id="gameCanvas" height="300.0" layoutX="100.0" layoutY="182.0" onMouseClicked="#click" onMouseDragged="#click" width="300.0" />
-            <VBox fx:id="vbox" alignment="CENTER_RIGHT" layoutY="182.0" prefHeight="300.0" prefWidth="90.0" />
-            <HBox fx:id="hbox" layoutX="95.0" layoutY="80.0" prefHeight="89.0" prefWidth="300.0" />
-            <Label alignment="CENTER" layoutX="12.0" layoutY="14.0" prefHeight="50.0" prefWidth="51.0" text="00">
+            <Canvas fx:id="gameCanvas" height="320.0" layoutX="80.0" layoutY="182.0" onMouseClicked="#click" onMouseDragged="#click" width="320.0" />
+            <VBox fx:id="vbox" alignment="CENTER_RIGHT" layoutX="2.0" layoutY="182.0" prefHeight="320.0" prefWidth="79.0" />
+            <HBox fx:id="hbox" layoutX="80.0" layoutY="80.0" prefHeight="90.0" prefWidth="320.0" />
+            <Label fx:id="lblHour" alignment="CENTER" layoutX="12.0" layoutY="14.0" prefHeight="50.0" prefWidth="51.0" text="00">
                <font>
                   <Font size="35.0" />
                </font>
@@ -25,7 +25,7 @@
                   <Font size="35.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="69.0" layoutY="14.0" prefHeight="50.0" prefWidth="51.0" text="00">
+            <Label fx:id="lblMinute" alignment="CENTER" layoutX="69.0" layoutY="14.0" prefHeight="50.0" prefWidth="51.0" text="00">
                <font>
                   <Font size="35.0" />
                </font>
@@ -35,7 +35,7 @@
                   <Font size="35.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="128.0" layoutY="14.0" prefHeight="50.0" prefWidth="51.0" text="00">
+            <Label fx:id="lblSecond" alignment="CENTER" layoutX="128.0" layoutY="14.0" prefHeight="50.0" prefWidth="51.0" text="00">
                <font>
                   <Font size="35.0" />
                </font>

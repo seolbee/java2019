@@ -1,5 +1,6 @@
 package main;
 
+import application.Main;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -40,13 +41,16 @@ public class Game {
 	
 	private AnchorPane pane;
 	
-	public Game(Canvas canvas, int xlength, VBox vbox, HBox hbox, AnchorPane pane) {
+	public Timer timer;
+	
+	public Game(Canvas canvas, int xlength, VBox vbox, HBox hbox, AnchorPane pane, Timer timer) {
 		this.canvas = canvas;
 		this.width = Math.ceil(this.canvas.getWidth() / (xlength + gap));
 		this.length = xlength;
 		this.vbox = vbox;
 		this.hbox = hbox;
 		this.pane = pane;
+		this.timer = timer;
 		gc = this.canvas.getGraphicsContext2D();
 		board = new Block[length][length];
 		pointList = xy.split(",");
@@ -107,6 +111,7 @@ public class Game {
 		}
 		if(clear) {
 			this.gameClear = true;
+			this.sendRank();
 		}
 	}
 	
@@ -122,13 +127,13 @@ public class Game {
 			if(gameOver) {
 				gc.setStroke(Color.WHITE);
 				gc.setTextAlign(TextAlignment.CENTER);
-				gc.setFont(new Font("Arial", 30));
+				gc.setFont(new Font("Arial", 40));
 				gc.strokeText("game Over", this.canvas.getWidth() / 2 , this.canvas.getHeight()/2);
 			}
 			if(gameClear) {
 				gc.setStroke(Color.WHITE);
 				gc.setTextAlign(TextAlignment.CENTER);
-				gc.setFont(new Font("Arial", 30));
+				gc.setFont(new Font("Arial", 40));
 				gc.strokeText("game Clear", this.canvas.getWidth()/2, this.canvas.getHeight()/2);
 			}
 	}
@@ -144,7 +149,7 @@ public class Game {
 					if(count == 0) continue;
 					Label label = new Label();
 					label.setText(count+"");
-					label.setFont(new Font("Arial", 20));
+					label.setFont(new Font("Arial", width / 2));
 					hbox.getChildren().add(label);
 					count = 0;
 				} else {
@@ -154,7 +159,7 @@ public class Game {
 			if(count != 0) {
 				Label label = new Label();
 				label.setText(count+"");
-				label.setFont(new Font("Arial", 20));
+				label.setFont(new Font("Arial", width / 2));
 				hbox.getChildren().add(label);
 				count = 0;
 			}
@@ -171,7 +176,7 @@ public class Game {
 					if(count == 0) continue;
 					Label label = new Label();
 					label.setText(count+"");
-					label.setFont(new Font("Arial", 20));
+					label.setFont(new Font("Arial", width / 2));
 					vbox.getChildren().add(label);
 					count = 0;
 				}else {
@@ -181,7 +186,7 @@ public class Game {
 			if(count != 0) {
 				Label label = new Label();
 				label.setText(count+"");
-				label.setFont(new Font("Arial", 20));
+				label.setFont(new Font("Arial", width / 2));
 				vbox.getChildren().add(label);
 				count = 0;
 			}
@@ -200,5 +205,9 @@ public class Game {
 			}
 		}
 		setLabel();
+	}
+	
+	public void sendRank() {
+		
 	}
 }
