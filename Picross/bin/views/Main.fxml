@@ -1,14 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.MainController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.MainController">
    <children>
-      <Canvas fx:id="gameCanvas" height="300.0" layoutX="102.0" layoutY="150.0" onMouseClicked="#click" onMouseDragged="#click" width="300.0" />
-      <VBox fx:id="vbox" alignment="CENTER_RIGHT" layoutY="150.0" prefHeight="300.0" prefWidth="90.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="302.0" />
-      <HBox fx:id="hbox" layoutX="105.0" layoutY="50.0" prefHeight="91.0" prefWidth="294.0" />
+      <AnchorPane fx:id="APane" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <Canvas fx:id="gameCanvas" height="300.0" layoutX="100.0" layoutY="182.0" onMouseClicked="#click" onMouseDragged="#click" width="300.0" />
+            <VBox fx:id="vbox" alignment="CENTER_RIGHT" layoutY="182.0" prefHeight="300.0" prefWidth="90.0" />
+            <HBox fx:id="hbox" layoutX="95.0" layoutY="80.0" prefHeight="89.0" prefWidth="300.0" />
+            <Label alignment="CENTER" layoutX="12.0" layoutY="14.0" prefHeight="50.0" prefWidth="51.0" text="00">
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="116.0" layoutY="13.0" prefHeight="50.0" prefWidth="16.0" text=":">
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="69.0" layoutY="14.0" prefHeight="50.0" prefWidth="51.0" text="00">
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="59.0" layoutY="13.0" prefHeight="50.0" prefWidth="16.0" text=":">
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="128.0" layoutY="14.0" prefHeight="50.0" prefWidth="51.0" text="00">
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
    </children>
-</AnchorPane>
+</StackPane>

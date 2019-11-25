@@ -6,13 +6,14 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import main.Game;
 
 public class MainController extends MasterController{
 	
 	@FXML
-	private AnchorPane pane;
+	private AnchorPane APane;
 	
 	@FXML
 	private Canvas gameCanvas;
@@ -25,9 +26,8 @@ public class MainController extends MasterController{
 	
 	@FXML
 	private void initialize() {
-		this.setRoot(pane);
 		System.out.println("게임판 생성");
-		Main.app.game = new Game(gameCanvas, 5, vbox, hbox, pane);
+		Main.app.game = new Game(gameCanvas, 5, vbox, hbox, APane);
 		Main.app.game.gameStart();
 	}
 	

@@ -1,18 +1,14 @@
 package views;
 
+import application.Main;
 import javafx.fxml.FXML;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.AnchorPane;
 
 public class fontController extends MasterController{
 	@FXML
-	private StackPane pane;
-	
-	@FXML
-	private void initialize() {
-		this.setRoot(pane);
-	}
+	private AnchorPane pane;
 	
 	public void gameStart() {
-		
+		Main.app.slideOut(getRoot());
 	}
 }
