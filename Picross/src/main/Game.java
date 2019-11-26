@@ -59,8 +59,8 @@ public class Game {
 	public boolean MkBoard(int pointY, int pointX) {
 		for(int i = 0; i< pointList.length; i++) {
 			String[] point = pointList[i].split(":"); 
-			int x =(int) Double.parseDouble(point[0]);
-			int y =(int) Double.parseDouble(point[1]);
+			int y =(int) Double.parseDouble(point[0]);
+			int x =(int) Double.parseDouble(point[1]);
 			if(pointY == y && pointX ==x) {
 				return true;
 			} else {
@@ -84,7 +84,8 @@ public class Game {
 		MouseButton btn = e.getButton();
 		if(btn == MouseButton.SECONDARY) {
 			board[y][x].setColor(Color.DIMGRAY);
-		}else if(btn == MouseButton.PRIMARY){	
+		}else if(btn == MouseButton.PRIMARY){
+			if(board[y][x].isCheck()) return;
 			if(x >=this.length || y >=this.length) return;
 			if(!board[y][x].isSetBoolean()) {
 				this.gameOver = true;
