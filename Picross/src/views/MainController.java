@@ -40,7 +40,7 @@ public class MainController extends MasterController{
 	private void initialize() {
 		System.out.println("게임판 생성");
 		timer = new Timer(lblHour, lblMinute, lblSecond);
-		Main.app.game = new Game(gameCanvas, 5, vbox, hbox, APane, timer);
+		Main.app.game = new Game(gameCanvas, 15, vbox, hbox, APane, timer);
 	}
 	
 	public void click(MouseEvent e) {
