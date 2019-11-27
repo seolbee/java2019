@@ -7,6 +7,8 @@ public class BoardVO {
 	private int id;
 	
 	private String name;
+	
+	private int length;
 
 	public String getLocation() {
 		return location;
@@ -32,5 +34,16 @@ public class BoardVO {
 		this.name = name;
 	}
 	
-	
+	public int getLength() {
+		return length;
+	}
+
+	public void setLength(int length) {
+		this.length = length;
+	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
 }

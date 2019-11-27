@@ -10,6 +10,8 @@ public class Block {
 	
 	private int height;
 	
+	private boolean click = false;
+	
 	private boolean setBoolean;
 	
 	private boolean check = false;
@@ -37,6 +39,14 @@ public class Block {
 
 	public void setCheck(boolean check) {
 		this.check = check;
+	}
+	
+	public boolean isClick() {
+		return click;
+	}
+	
+	public void setClick(boolean click) {
+		this.click = click;
 	}
 	
 }

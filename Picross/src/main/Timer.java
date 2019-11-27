@@ -33,9 +33,9 @@ public class Timer extends Thread{
 	
 	@Override
 	public void run() {
-		while(true) {
+		while(start) {
 			try {
-				Thread.sleep(10000);
+				Thread.sleep(1000);
 				sec++;
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -49,11 +49,42 @@ public class Timer extends Thread{
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-					lblHour.setText(hour.toString());
-					lblminute.setText(minute.toString());
-					lblsecond.setText(second.toString());
+					lblHour.setText(value(hour.toString()));
+					lblminute.setText(value(minute.toString()));
+					lblsecond.setText(value(second.toString()));
 				}
 			});
 		}
 	}
+	
+	public String value(String value) {
+		String val = "0" + value;
+		return val.substring(0, 2);
+	}
+
+	public boolean isStart() {
+		return start;
+	}
+
+	public void setStart(boolean start) {
+		this.start = start;
+	}
+
+	public boolean isStop() {
+		return stop;
+	}
+
+	public void setStop(boolean stop) {
+		this.stop = stop;
+	}
+
+	public boolean isQuit() {
+		return quit;
+	}
+
+	public void setQuit(boolean quit) {
+		this.quit = quit;
+	}
+	
+	
 }

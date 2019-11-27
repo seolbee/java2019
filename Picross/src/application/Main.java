@@ -1,5 +1,6 @@
 package application;
 	
+import java.sql.Time;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,7 +16,10 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.Game;
+import views.MainController;
 import views.MasterController;
+import views.RankController;
+import views.StageController;
 
 
 public class Main extends Application {
@@ -55,8 +59,26 @@ public class Main extends Application {
 			qc.setRoot(QueuePage);
 			controllerMap.put("queue", qc);
 			
+			FXMLLoader StageLoader = new FXMLLoader();
+			StageLoader.setLocation(getClass().getResource("/views/Stage.fxml"));
+			AnchorPane StagePage = StageLoader.load();
+			
+			MasterController sc = StageLoader.getController();
+			sc.setRoot(StagePage);
+			controllerMap.put("stage", sc);
+			
+			FXMLLoader RankLoader = new FXMLLoader();
+			RankLoader.setLocation(getClass().getResource("/views/Rank.fxml"));
+			AnchorPane RankPage = RankLoader.load();
+			
+			MasterController rc = RankLoader.getController();
+			rc.setRoot(RankPage);
+			controllerMap.put("rank", rc);
+			
 			Scene scene = new Scene(stPane);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			stPane.getChildren().add(StagePage);
+			stPane.getChildren().add(QueuePage);
 			stPane.getChildren().add(fontPage);
 			
 			primaryStage.setScene(scene);
@@ -98,4 +120,23 @@ public class Main extends Application {
 		timeline.play();
 	}
 	
+	public void setLevel(String level) {
+		StageController sc = (StageController) controllerMap.get("stage");
+		sc.setLevel(level);
+		sc.setList();
+	}
+	
+	public void setMainInfo(String location, int length, int id) {
+		MainController mc = (MainController) controllerMap.get("main");
+		mc.setLength(length);
+		mc.setLocation(location);
+		mc.setId(id);
+		mc.setGame();
+	}
+
+	public void setRank(Time time, int id) {
+		RankController rc = (RankController) controllerMap.get("rank");
+		rc.setTime(time);
+		rc.setId(id);
+	}
 }

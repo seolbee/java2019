@@ -34,16 +34,39 @@ public class MainController extends MasterController{
 	@FXML
 	private Label lblSecond;
 	
+	private int length;
+	
+	private String location;
+	
 	public Timer timer;
+	
+	private int id;
 	
 	@FXML
 	private void initialize() {
 		System.out.println("게임판 생성");
+	}
+	
+	public void setGame() {
 		timer = new Timer(lblHour, lblMinute, lblSecond);
-		Main.app.game = new Game(gameCanvas, 15, vbox, hbox, APane, timer);
+		Main.app.game = new Game(gameCanvas, length, vbox, hbox, APane, timer, location, id);
+		timer.setStart(true);
+		Main.app.game.gameStart();
 	}
 	
 	public void click(MouseEvent e) {
 		Main.app.game.click(e);
+	}
+	
+	public void setLength(int length) {
+		this.length = length;
+	}
+	
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 }

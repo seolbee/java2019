@@ -10,6 +10,5 @@ public class fontController extends MasterController{
 	
 	public void gameStart() {
 		Main.app.slideOut(getRoot());
-		Main.app.game.gameStart();
 	}
 }

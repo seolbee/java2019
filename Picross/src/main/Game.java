@@ -1,6 +1,11 @@
 package main;
 
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import application.Main;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -28,7 +33,7 @@ public class Game {
 	
 	private int gap = 1;
 	
-	private String xy = "0:7,1:6,1:7,1:8,2:4,2:5,2:6,2:8,2:9,2:10,3:6,3:7,3:8,4:0,4:7,4:14,5:0,5:7,5:14,6:0,6:2,6:6,6:7,6:8,6:11,6:14,7:0,7:1,7:3,7:6,7:7,7:8,7:11,7:13,7:14,8:0,8:1,8:2,8:3,8:4,8:6,8:7,8:8,8:10,8:11,8:12,8:13,8:14,9:0,9:1,9:2,9:4,9:5,9:6,9:7,9:8,9:9,9:10,9:12,9:13,9:14,10:0,10:1,10:2,10:3,10:4,10:5,10:6,10:7,10:8,10:9,10:10,10:11,10:12,10:13,10:14,11:0,11:1,11:3,11:4,11:5,11:6,11:7,11:8,11:9,11:10,11:11,11:13,11:14,12:1,12:2,12:3,12:4,12:5,12:6,12:7,12:8,12:9,12:10,12:11,12:12,12:13,13:2,13:3,13:5,13:7,13:9,13:11,13:12,14:0,14:1,14:2,14:3,14:4,14:5,14:6,14:7,14:8,14:9,14:10,14:11,14:12,14:13,14:14";
+	private String xy;
 	private String[] pointList;
 	
 	private boolean gameOver = false;
@@ -43,7 +48,9 @@ public class Game {
 	
 	public Timer timer;
 	
-	public Game(Canvas canvas, int xlength, VBox vbox, HBox hbox, AnchorPane pane, Timer timer) {
+	private int id;
+	
+	public Game(Canvas canvas, int xlength, VBox vbox, HBox hbox, AnchorPane pane, Timer timer, String location, int id) {
 		this.canvas = canvas;
 		this.width = Math.ceil(this.canvas.getWidth() / (xlength + gap));
 		this.length = xlength;
@@ -51,6 +58,8 @@ public class Game {
 		this.hbox = hbox;
 		this.pane = pane;
 		this.timer = timer;
+		this.xy = location;
+		this.id = id;
 		gc = this.canvas.getGraphicsContext2D();
 		board = new Block[length][length];
 		pointList = xy.split(",");
@@ -85,12 +94,12 @@ public class Game {
 		
 		MouseButton btn = e.getButton();
 		if(btn == MouseButton.SECONDARY) {
-			if(board[y][x].isCheck()) {
-				board[y][x].setColor(Color.DIMGRAY);
-				board[y][x].setCheck(false);
-			} else {
+			if(board[y][x].isClick()) {
 				board[y][x].setColor(Color.BLACK);
-				board[y][x].setCheck(true);
+				board[y][x].setClick(false);
+			} else {
+				board[y][x].setColor(Color.DIMGRAY);
+				board[y][x].setClick(true);
 			}
 		}else if(btn == MouseButton.PRIMARY){
 			if(!board[y][x].isSetBoolean()) {
@@ -118,6 +127,7 @@ public class Game {
 		}
 		if(clear) {
 			this.gameClear = true;
+			timer.setStart(false);
 			this.sendRank();
 		}
 	}
@@ -149,12 +159,13 @@ public class Game {
 		for(int i = 0; i<this.length; i++) {
 			int count = 0;
 			HBox hbox = new HBox();
-			hbox.setMinHeight(width);
+			hbox.setMinHeight(width+1);
 			hbox.setAlignment(Pos.CENTER_RIGHT);
 			for(int j = 0; j<this.length; j++) {
 				if(!board[i][j].isSetBoolean()) {
 					if(count == 0) continue;
 					Label label = new Label();
+					label.setPadding(new Insets(0, 0.1, 0, 0.1));
 					label.setText(count+"");
 					label.setFont(new Font("Arial", width / 2));
 					hbox.getChildren().add(label);
@@ -165,6 +176,7 @@ public class Game {
 			}
 			if(count != 0) {
 				Label label = new Label();
+				label.setPadding(new Insets(0, 0.1, 0, 0.1));
 				label.setText(count+"");
 				label.setFont(new Font("Arial", width / 2));
 				hbox.getChildren().add(label);
@@ -176,12 +188,13 @@ public class Game {
 		for(int i = 0; i<this.length; i++) {
 			int count = 0;
 			VBox vbox = new VBox();
-			vbox.setMinWidth(width);
+			vbox.setMinWidth(width+1);
 			vbox.setAlignment(Pos.CENTER);
 			for(int j = 0; j<this.length; j++) {
 				if(!board[j][i].isSetBoolean()) {
 					if(count == 0) continue;
 					Label label = new Label();
+					label.setPadding(new Insets(0, 0.1, 0, 0.1));
 					label.setText(count+"");
 					label.setFont(new Font("Arial", width / 2));
 					vbox.getChildren().add(label);
@@ -192,6 +205,7 @@ public class Game {
 			}
 			if(count != 0) {
 				Label label = new Label();
+				label.setPadding(new Insets(0, 0.1, 0, 0.1));
 				label.setText(count+"");
 				label.setFont(new Font("Arial", width / 2));
 				vbox.getChildren().add(label);
@@ -212,9 +226,15 @@ public class Game {
 			}
 		}
 		setLabel();
+		timer.start();
+	}
+	
+	public Time send() {
+		return new Time(timer.hour, timer.minute, timer.second);
 	}
 	
 	public void sendRank() {
-		
+		Main.app.setRank(send(), id);
+		Main.app.loadPane("rank");
 	}
 }
