@@ -1,8 +1,6 @@
 package main;
 
 import java.sql.Time;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import application.Main;
 import javafx.geometry.Insets;
@@ -50,19 +48,14 @@ public class Game {
 	
 	private int id;
 	
-	public Game(Canvas canvas, int xlength, VBox vbox, HBox hbox, AnchorPane pane, Timer timer, String location, int id) {
+	public boolean isTimer = false;
+	
+	public Game(Canvas canvas, VBox vbox, HBox hbox, AnchorPane pane) {
 		this.canvas = canvas;
-		this.width = Math.ceil(this.canvas.getWidth() / (xlength + gap));
-		this.length = xlength;
 		this.vbox = vbox;
 		this.hbox = hbox;
 		this.pane = pane;
-		this.timer = timer;
-		this.xy = location;
-		this.id = id;
 		gc = this.canvas.getGraphicsContext2D();
-		board = new Block[length][length];
-		pointList = xy.split(",");
 	}
 
 	public boolean MkBoard(int pointY, int pointX) {
@@ -104,6 +97,7 @@ public class Game {
 		}else if(btn == MouseButton.PRIMARY){
 			if(!board[y][x].isSetBoolean()) {
 				this.gameOver = true;
+				this.timer.setStart(false);
 				board[y][x].setColor(Color.RED);
 			}else {
 				board[y][x].setCheck(true);
@@ -216,7 +210,18 @@ public class Game {
 		}
 	}
 	
-	public void gameStart(){
+	public void gameStart(String location, int xlength, int id, Timer timer){
+		boardClear();
+		this.xy = location;
+		this.length = xlength;
+		this.id = id;
+		this.timer = timer;
+		pointList = xy.split(",");
+		this.width = Math.ceil(this.canvas.getWidth() / (xlength + gap));
+		System.out.println(this.length);
+		board = new Block[length][length];
+		System.out.println(this.width);
+		gc.setFill(Color.BLACK);
 		for(int i = 0; i < this.length; i++) {
 			for(int j = 0; j < this.length; j++) {
 				double x = 1 + (width + 1) * j;
@@ -225,6 +230,11 @@ public class Game {
 				board[i][j] = new Block(MkBoard(i, j), Color.BLACK);
 			}
 		}
+		this.gameOver = false;
+		this.gameClear = false;
+		vbox.getChildren().clear();
+		hbox.getChildren().clear();
+		this.isTimer= true;
 		setLabel();
 		timer.start();
 	}
@@ -236,5 +246,17 @@ public class Game {
 	public void sendRank() {
 		Main.app.setRank(send(), id);
 		Main.app.loadPane("rank");
+	}
+	
+	public void boardClear() {
+		gc.setFill(Color.WHITE);
+		for(int i = 0; i < this.length; i++) {
+			for(int j = 0; j < this.length; j++) {
+				double x = 1 + (width + 1) * j;
+				double y = 1 + (width + 1) * i;
+				board[i][j] = new Block(false, Color.WHITE);
+				gc.fillRect(x, y, width, width);
+			}
+		}
 	}
 }

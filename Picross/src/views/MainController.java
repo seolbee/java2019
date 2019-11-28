@@ -45,13 +45,13 @@ public class MainController extends MasterController{
 	@FXML
 	private void initialize() {
 		System.out.println("게임판 생성");
+		Main.app.game = new Game(gameCanvas, vbox, hbox, APane);
 	}
 	
 	public void setGame() {
 		timer = new Timer(lblHour, lblMinute, lblSecond);
-		Main.app.game = new Game(gameCanvas, length, vbox, hbox, APane, timer, location, id);
 		timer.setStart(true);
-		Main.app.game.gameStart();
+		Main.app.game.gameStart(location, length, id, timer);
 	}
 	
 	public void click(MouseEvent e) {
@@ -68,5 +68,18 @@ public class MainController extends MasterController{
 	
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public void stopThread() {
+		timer.setStart(false);
+	}
+	
+	public void cancel() {
+		stopThread();
+		Main.app.loadPane("stage");
+	}
+	
+	public boolean isStart() {
+		return timer.isStart();
 	}
 }

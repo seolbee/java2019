@@ -71,7 +71,7 @@ public class StageController extends MasterController{
 	
 	public void list_click() {
 		BoardVO item = listView.getSelectionModel().getSelectedItem();
-		String sql = "SELECT * FROM picross_rank WHERE board = ?";
+		String sql = "SELECT * FROM picross_rank WHERE board = ? ORDER BY time DESC";
 		Connection con = JDBCUtil.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -99,5 +99,9 @@ public class StageController extends MasterController{
 	
 	public void setLevel(String level) {
 		this.level = level;
+	}
+	
+	public void cancel() {
+		Main.app.loadPane("queue");
 	}
 }
