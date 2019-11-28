@@ -14,6 +14,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
@@ -139,13 +142,15 @@ public class Game {
 				gc.setStroke(Color.WHITE);
 				gc.setTextAlign(TextAlignment.CENTER);
 				gc.setFont(new Font("Arial", 40));
-				gc.strokeText("game Over", this.canvas.getWidth() / 2 , this.canvas.getHeight()/2);
+				gc.setFill(Color.GRAY);
+				gc.fillText("game Over", this.canvas.getWidth() / 2, this.canvas.getHeight()/2);
 			}
 			if(gameClear) {
 				gc.setStroke(Color.WHITE);
 				gc.setTextAlign(TextAlignment.CENTER);
 				gc.setFont(new Font("Arial", 40));
-				gc.strokeText("game Clear", this.canvas.getWidth()/2, this.canvas.getHeight()/2);
+				gc.setFill(Color.GRAY);
+				gc.fillText("game Over", this.canvas.getWidth() / 2, this.canvas.getHeight()/2);
 			}
 	}
 	
@@ -154,7 +159,7 @@ public class Game {
 			int count = 0;
 			HBox hbox = new HBox();
 			hbox.setMinHeight(width+1);
-			hbox.setAlignment(Pos.CENTER_RIGHT);
+			hbox.setAlignment(Pos.TOP_RIGHT);
 			for(int j = 0; j<this.length; j++) {
 				if(!board[i][j].isSetBoolean()) {
 					if(count == 0) continue;
@@ -162,6 +167,7 @@ public class Game {
 					label.setPadding(new Insets(0, 0.1, 0, 0.1));
 					label.setText(count+"");
 					label.setFont(new Font("Arial", width / 2));
+					label.setTextFill(Color.WHITE);
 					hbox.getChildren().add(label);
 					count = 0;
 				} else {
@@ -173,8 +179,8 @@ public class Game {
 				label.setPadding(new Insets(0, 0.1, 0, 0.1));
 				label.setText(count+"");
 				label.setFont(new Font("Arial", width / 2));
+				label.setTextFill(Color.WHITE);
 				hbox.getChildren().add(label);
-				count = 0;
 			}
 			vbox.getChildren().add(hbox);
 		}
@@ -190,6 +196,7 @@ public class Game {
 					Label label = new Label();
 					label.setPadding(new Insets(0, 0.1, 0, 0.1));
 					label.setText(count+"");
+					label.setTextFill(Color.WHITE);
 					label.setFont(new Font("Arial", width / 2));
 					vbox.getChildren().add(label);
 					count = 0;
@@ -201,9 +208,9 @@ public class Game {
 				Label label = new Label();
 				label.setPadding(new Insets(0, 0.1, 0, 0.1));
 				label.setText(count+"");
+				label.setTextFill(Color.WHITE);
 				label.setFont(new Font("Arial", width / 2));
 				vbox.getChildren().add(label);
-				count = 0;
 			}
 			
 			hbox.getChildren().add(vbox);
@@ -227,6 +234,9 @@ public class Game {
 				double x = 1 + (width + 1) * j;
 				double y = 1 + (width + 1) * i;
 				gc.fillRect(x, y, width, width);
+				gc.setStroke(Color.WHITE);
+				gc.setLineWidth(0.1);
+				gc.strokeRect(x, y, width, width);
 				board[i][j] = new Block(MkBoard(i, j), Color.BLACK);
 			}
 		}

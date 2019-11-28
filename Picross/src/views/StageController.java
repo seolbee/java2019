@@ -5,12 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import Util.JDBCUtil;
+import Util.util;
 import application.Main;
 import domain.BoardVO;
 import domain.RankVO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListView;
 
 public class StageController extends MasterController{
@@ -65,13 +67,22 @@ public class StageController extends MasterController{
 	
 	public void gameStart() {
 		BoardVO item = listView.getSelectionModel().getSelectedItem();
+		if(item == null) {
+			util.showAlert("오류", "보드판을 선택하세요", AlertType.ERROR);
+			return;
+		}
 		Main.app.slideOut(getRoot());
 		Main.app.setMainInfo(item.getLocation(), item.getLength(), item.getId());
 	}
 	
 	public void list_click() {
 		BoardVO item = listView.getSelectionModel().getSelectedItem();
-		String sql = "SELECT * FROM picross_rank WHERE board = ? ORDER BY time DESC";
+		if(item == null) {
+			util.showAlert("오류", "보드 판을 선택하세요", AlertType.ERROR);
+			return;
+		}
+		String sql = "SELECT * FROM picross_rank WHERE board = ? ORDER BY time ASC";
+		rank.clear();
 		Connection con = JDBCUtil.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

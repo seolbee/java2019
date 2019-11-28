@@ -9,6 +9,8 @@ public class BoardVO {
 	private String name;
 	
 	private int length;
+	
+	private boolean empty;
 
 	public String getLocation() {
 		return location;
@@ -45,5 +47,13 @@ public class BoardVO {
 	@Override
 	public String toString() {
 		return name;
+	}
+	
+	public void setEmpty(boolean emtpy) {
+		this.empty = emtpy;
+	}
+	
+	public boolean isEmpty() {
+		return this.empty;
 	}
 }

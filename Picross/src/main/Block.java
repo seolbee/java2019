@@ -17,8 +17,8 @@ public class Block {
 	private boolean check = false;
 	
 	public Block(boolean bo, Color color) {
-		this.setBoolean = bo;
 		this.color = color;
+		this.setBoolean = bo;
 	}
 
 	public boolean isSetBoolean() {
