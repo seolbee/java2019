@@ -75,7 +75,9 @@ public class MainController extends MasterController{
 	}
 	
 	public void cancel() {
-		stopThread();
+		timer.setQuit(true);
+		timer.setStart(false);
+		timer.reset();
 		Main.app.loadPane("stage");
 	}
 	

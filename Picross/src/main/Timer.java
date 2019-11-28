@@ -36,11 +36,13 @@ public class Timer extends Thread{
 		while(start) {
 			try {
 				Thread.sleep(1000);
-				sec++;
+				if(quit) return;
 			} catch (Exception e) {
 				e.printStackTrace();
 				System.out.println("쓰레드 오류");
 			}
+			
+			sec++;
 			
 			hour = sec / 3600;
 			minute = sec % 3600/60;
@@ -86,5 +88,13 @@ public class Timer extends Thread{
 		this.quit = quit;
 	}
 	
-	
+	public void reset() {
+		sec = 0;
+		hour = 0;
+		minute = 0;
+		second = 0;
+		lblHour.setText(value("0"));
+		lblsecond.setText(value("0"));
+		lblminute.setText(value("0"));
+	}
 }

@@ -71,8 +71,8 @@ public class StageController extends MasterController{
 			util.showAlert("오류", "보드판을 선택하세요", AlertType.ERROR);
 			return;
 		}
-		Main.app.slideOut(getRoot());
 		Main.app.setMainInfo(item.getLocation(), item.getLength(), item.getId());
+		Main.app.slideOut(getRoot());
 	}
 	
 	public void list_click() {

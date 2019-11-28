@@ -25,6 +25,7 @@ public class RankController extends MasterController{
 	private Label lblTime;
 	
 	public void setTime(Time time) {
+		this.txtName.setText("");
 		this.time = time;
 		lblTime.setText("시간 : " + time.toString());
 	}
@@ -35,18 +36,34 @@ public class RankController extends MasterController{
 			util.showAlert("에러", "빈칸이 존재합니다.", AlertType.ERROR);
 			return;
 		}
-		String sql = "INSERT INTO `picross_rank`(`name`, `time`,`board`) VALUES (?, ?, ?)";
+		String query = "SELECT * FROM picross_rank WHERE name = ? AND board = ?";
 		Connection con = JDBCUtil.getConnection();
 		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
 		try {
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, name);
-			pstmt.setTime(2, time);
-			pstmt.setInt(3, id);
+			pstmt.setInt(2, id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				sql = "UPDATE `picross_rank` SET `time`= ? WHERE name = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setTime(1, time);
+				pstmt.setString(2, name);
+			} else {
+				sql = "INSERT INTO `picross_rank`(`name`, `time`,`board`) VALUES (?, ?, ?)";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, name);
+				pstmt.setTime(2, time);
+				pstmt.setInt(3, id);
+			}
+			System.out.println(sql);
 			int cnt = pstmt.executeUpdate();
 			if(cnt > 0) {
 				util.showAlert("랭킹 등록", "랭킹에 등록했습니다.", AlertType.CONFIRMATION);
 				Main.app.loadPane("stage");
+				Main.app.slideOut(getRoot());
 			} else {
 				util.showAlert("오류", "DB에 등록하는 도중 오류가 터졌습니다.", AlertType.ERROR);
 			}

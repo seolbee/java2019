@@ -58,7 +58,7 @@ public class Game {
 		this.vbox = vbox;
 		this.hbox = hbox;
 		this.pane = pane;
-		gc = this.canvas.getGraphicsContext2D();
+		this.gc = this.canvas.getGraphicsContext2D();
 	}
 
 	public boolean MkBoard(int pointY, int pointX) {
@@ -218,16 +218,18 @@ public class Game {
 	}
 	
 	public void gameStart(String location, int xlength, int id, Timer timer){
-		boardClear();
+		vbox.getChildren().clear();
+		hbox.getChildren().clear();
+		this.gameOver = false;
+		this.gameClear = false;
 		this.xy = location;
 		this.length = xlength;
 		this.id = id;
 		this.timer = timer;
 		pointList = xy.split(",");
 		this.width = Math.ceil(this.canvas.getWidth() / (xlength + gap));
-		System.out.println(this.length);
+		gc.clearRect(0, 0, this.canvas.getWidth(), this.canvas.getWidth());
 		board = new Block[length][length];
-		System.out.println(this.width);
 		gc.setFill(Color.BLACK);
 		for(int i = 0; i < this.length; i++) {
 			for(int j = 0; j < this.length; j++) {
@@ -238,14 +240,12 @@ public class Game {
 				gc.setLineWidth(0.1);
 				gc.strokeRect(x, y, width, width);
 				board[i][j] = new Block(MkBoard(i, j), Color.BLACK);
+				board[i][j].setCheck(false);
+				board[i][j].setClick(false);
 			}
 		}
-		this.gameOver = false;
-		this.gameClear = false;
-		vbox.getChildren().clear();
-		hbox.getChildren().clear();
-		this.isTimer= true;
 		setLabel();
+		this.isTimer= true;
 		timer.start();
 	}
 	
@@ -256,17 +256,5 @@ public class Game {
 	public void sendRank() {
 		Main.app.setRank(send(), id);
 		Main.app.loadPane("rank");
-	}
-	
-	public void boardClear() {
-		gc.setFill(Color.WHITE);
-		for(int i = 0; i < this.length; i++) {
-			for(int j = 0; j < this.length; j++) {
-				double x = 1 + (width + 1) * j;
-				double y = 1 + (width + 1) * i;
-				board[i][j] = new Block(false, Color.WHITE);
-				gc.fillRect(x, y, width, width);
-			}
-		}
 	}
 }
