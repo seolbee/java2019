@@ -58,8 +58,8 @@ public class Timer extends Thread{
 	}
 	
 	public String value(String value) {
-		String val = "0" + value;
-		return val.substring(0, 2);
+		String val = "00" + value;
+		return val.substring(val.length()-2, val.length());
 	}
 
 	public boolean isStart() {
