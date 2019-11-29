@@ -84,6 +84,7 @@ public class Main extends Application {
 			stPane.getChildren().add(fontPage);
 			
 			primaryStage.setScene(scene);
+			primaryStage.setResizable(false);
 			primaryStage.show();
 			
 			primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {

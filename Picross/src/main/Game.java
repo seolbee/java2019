@@ -1,6 +1,7 @@
 package main;
 
 import java.sql.Time;
+import java.util.Arrays;
 
 import application.Main;
 import javafx.geometry.Insets;
@@ -64,8 +65,8 @@ public class Game {
 	public boolean MkBoard(int pointY, int pointX) {
 		for(int i = 0; i< pointList.length; i++) {
 			String[] point = pointList[i].split(":"); 
-			int y =(int) Double.parseDouble(point[0]);
-			int x =(int) Double.parseDouble(point[1]);
+			int y =(int) Integer.parseInt(point[0]);
+			int x =(int) Integer.parseInt(point[1]);
 			if(pointY == y && pointX ==x) {
 				return true;
 			} else {
@@ -98,6 +99,7 @@ public class Game {
 				board[y][x].setClick(true);
 			}
 		}else if(btn == MouseButton.PRIMARY){
+			if(board[y][x].isClick()) return;
 			if(!board[y][x].isSetBoolean()) {
 				this.gameOver = true;
 				this.timer.setStart(false);
@@ -150,7 +152,7 @@ public class Game {
 				gc.setTextAlign(TextAlignment.CENTER);
 				gc.setFont(new Font("Arial", 40));
 				gc.setFill(Color.GRAY);
-				gc.fillText("game Over", this.canvas.getWidth() / 2, this.canvas.getHeight()/2);
+				gc.fillText("game Clear", this.canvas.getWidth() / 2, this.canvas.getHeight()/2);
 			}
 	}
 	

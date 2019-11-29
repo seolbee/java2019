@@ -37,8 +37,8 @@ public class StageController extends MasterController{
 	}
 	
 	public void setList() {
-		System.out.println(level);
 		list.clear();
+		rank.clear();
 		String sql = "SELECT picross_board.*, picross_level.id, picross_level.length FROM picross_board, picross_level WHERE picross_level.name = ? AND picross_level.id = picross_board.level";
 		Connection con = JDBCUtil.getConnection();
 		PreparedStatement pstmt = null;
@@ -95,7 +95,6 @@ public class StageController extends MasterController{
 				rank_item.setId(rs.getInt("id"));
 				rank_item.setName(rs.getString("name"));
 				rank_item.setTime(rs.getTime("time"));
-				System.out.println(rank_item);
 				rank.add(rank_item);
 			}
 		} catch (Exception e) {
