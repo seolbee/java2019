@@ -64,6 +64,7 @@ public class Ex03 {
 					arr = array;
 					System.out.println(Arrays.toString(arr));
 				}
+				cnt--;
 				
 			}
 			else if(sel == 3) {

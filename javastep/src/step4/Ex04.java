@@ -57,6 +57,9 @@ public class Ex04 {
 						arr[i] = accs[i];
 						arr2[i] = pws[i];
 					}
+					System.out.println(arr.length);
+					System.out.println(cnt);
+					System.out.println(arr[cnt]);
 					arr[cnt] = acc;
 					arr2[cnt] = pw;
 					accs = arr;
@@ -81,7 +84,7 @@ public class Ex04 {
 						break;
 					}
 				}
-				if(idx <0) {
+				if(idx < 0) {
 					System.out.println("없는 계좌번호 입니다.");
 					continue;
 				}
@@ -99,6 +102,7 @@ public class Ex04 {
 				pws = array;
 				System.out.println(Arrays.toString(accs));
 				System.out.println(Arrays.toString(pws));
+				cnt--;
 			}
 			
 		}
